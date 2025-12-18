@@ -21,7 +21,6 @@
 # IDE - VSCode
 .vscode/*
 .qodo/*
-.angular
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -43,3 +42,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+.angular/cache/
