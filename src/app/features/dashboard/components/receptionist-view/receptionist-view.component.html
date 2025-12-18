@@ -1,0 +1,273 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Dashboard'" [items]="[]" [active_item]="'Dashboard'"></app-breadcrumb>
+    </div>
+    <!-- Widgets -->
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-purple">
+              <i class="material-icons align-middle">face</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Appointments</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{ totalAppointments}}</h3>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-green">
+              <i class="material-icons align-middle">person_add</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">New Patients</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{patientList.length}}</h3>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-blue">
+              <i class="material-icons align-middle">local_activity</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Earning</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{ totalEarnings | currency:'NGN':'symbol':'1.0-0' }}</h3>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+
+    </div>
+    <!-- #END# Widgets -->
+    <!-- <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>
+              Hospital Survey</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="body">
+            <apx-chart [series]="areaChartOptions.series" [chart]="areaChartOptions.chart"
+              [xaxis]="areaChartOptions.xaxis" [yaxis]="areaChartOptions.yaxis" [colors]="areaChartOptions.colors"
+              [stroke]="areaChartOptions.stroke" [legend]="areaChartOptions.legend" [tooltip]="areaChartOptions.tooltip"
+              [dataLabels]="areaChartOptions.dataLabels"></apx-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Common Diseases Report</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="body">
+            <apx-chart [series]="barChartOptions.series" [chart]="barChartOptions.chart"
+              [dataLabels]="barChartOptions.dataLabels" [plotOptions]="barChartOptions.plotOptions"
+              [responsive]="barChartOptions.responsive" [xaxis]="barChartOptions.xaxis"
+              [tooltip]="barChartOptions.tooltip" [legend]="barChartOptions.legend" [fill]="barChartOptions.fill">
+            </apx-chart>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="card">
+          <div class="header">
+            <h2>Booked Appointments</h2>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Patient ID</th>
+                    <th>Assigned Doctor</th>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let appt of bookedAppointments; let i = index">
+                    <td class="table-img">
+                      <img [src]="'assets/images/avatar.png'" alt="">
+                    </td>
+                    <td>{{ appt.patientId | slice:0:8}}</td>
+                    <td>Dr. {{ appt.staff?.fullName}}</td>
+                    <td>{{ appt.appointmentDate | date: 'medium' }}</td>
+                    <td>
+                      <div class="badge col-red">{{ appt.reason }}</div>
+                    </td>
+                   <!--  <td>
+                      <button mat-icon-button class="tbl-action-btn">
+                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                      </button>
+                      <button mat-icon-button class="tbl-action-btn">
+                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                      </button>
+                    </td> -->
+                  </tr>
+                  <tr *ngIf="bookedAppointments.length === 0">
+                    <td colspan="6" class="text-center">No recent appointments found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="card">
+          <div class="header">
+            <h2>
+              Doctors List</h2>
+            <button mat-button [matMenuTriggerFor]="menu" class="header-dropdown">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Action</button>
+              <button mat-menu-item>Another action</button>
+              <button mat-menu-item>Something else here</button>
+            </mat-menu>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Doctor Name</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user5.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Dr.Jay Soni
+                        </a></div>
+                      <div class="text-job font-11">(MBBS,MD)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user6.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Dr.Busade Adedayo
+                        </a></div>
+                      <div class="text-job font-11">(BDS,MDS)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-orange">Absend</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user3.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com">Dr.Megha Trivedi
+                        </a></div>
+                      <div class="text-job font-11">(BHMS)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user2.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Dr.John Deo
+                        </a></div>
+                      <div class="text-job font-11">(MBBS,MS)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-green">Available</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user1.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Dr.Jacob Ryan
+                        </a></div>
+                      <div class="text-job font-11">(MBBS,MD)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-orange">Absend</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-img">
+                      <img src="assets/images/user/user8.jpg" alt="">
+                    </td>
+                    <td>
+                      <div class="media-title"><a href="mailto:test@gmail.com"> Dr.Jay Soni
+                        </a></div>
+                      <div class="text-job font-11">(MBBS)</div>
+                    </td>
+                    <td>
+                      <div class="badge badge-solid-green">Available</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    
+  </div>
+</section>

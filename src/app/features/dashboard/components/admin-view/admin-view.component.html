@@ -1,0 +1,229 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <app-breadcrumb [title]="'Dashboard'" [items]="[]" [active_item]="'Dashboard'"></app-breadcrumb>
+    </div>
+
+    <div class="row">
+      
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-purple">
+              <i class="material-icons align-middle">face</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Total Patients</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{ patientCount }}</h3>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-orange">
+              <i class="material-icons align-middle">schedule</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Total Appointments</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{ totalAppointments}}</h3> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-green">
+              <i class="material-icons align-middle">group</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Total Staff</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0"> {{ userCount}}</h3> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card card-statistic-2">
+          <div class="clearfix">
+            <div class="card-icon shadow-primary bg-blue">
+              <i class="material-icons align-middle">local_activity</i>
+            </div>
+            <div class="card-right">
+              <div>
+                <h5 class="float-end">Total Revenue</h5>
+              </div>
+              <div class="m-r-10 m-l-10">
+                <h3 class="font-weight-bold float-end mb-0">
+                  {{ totalEarnings | currency:'NGN':'symbol':'1.0-0' }}
+                </h3>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row clearfix">
+     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="header">
+            <h2>Recent Patients</h2>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Registered</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let patient of patientList; let i = index">
+                    <td class="table-img">
+                      <img [src]="'assets/images/avatar.png'" alt="">
+                    </td>
+                    <td>{{ patient.id | slice:0:8 }}</td>
+                    <td>{{ patient.firstName}} {{patient.lastName}}</td>
+                    <td>
+                      <a href="mailto:{{ patient.email }}">{{ patient.email }}</a>
+                    </td>
+                    <td>{{ patient.dob | date: 'medium' }}</td>
+                    <td>{{ patient.createdAt | date: 'mediumDate' }}</td>
+                  </tr>
+                  <tr *ngIf="!patientList">
+                    <td colspan="5" class="text-center">No recent patients found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+        <div class="row clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="header">
+            <h2>Recent Appointments</h2>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Patient ID</th>
+                    <th>Assigned Doctor</th>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    <!-- <th>Actions </th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let appt of bookedAppointments; let i = index">
+                    <td class="table-img">
+                      <img [src]="'assets/images/avatar.png'" alt="">
+                    </td>
+                    <td>{{ appt.patientId | slice:0:8}}</td>
+                    <td>Dr. {{ appt.staff?.fullName}}</td>
+                    <td>{{ appt.appointmentDate | date: 'medium' }}</td>
+                    <td>
+                      <div class="badge col-red">{{ appt.reason }}</div>
+                    </td>
+                   <!--  <td>
+                      <button mat-icon-button class="tbl-action-btn">
+                        <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                      </button>
+                      <button mat-icon-button class="tbl-action-btn">
+                        <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                      </button>
+                    </td> -->
+                  </tr>
+                  <tr *ngIf="bookedAppointments.length === 0">
+                    <td colspan="6" class="text-center">No recent appointments found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="header">
+            <h2>Active Staff</h2>
+          </div>
+          <div class="tableBody">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Staff ID</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+               <tbody>
+                <tr *ngFor="let staff of staffList; let i = index">
+                  <td class="table-img">
+                    <img [src]="'assets/images/avatar.png'" alt="">
+                  </td>
+                  <td>{{ staff.id | slice:0:8 }}</td>
+                  <td>
+                    <div class="media-title">
+                      <a href="mailto:{{ staff.email }}">{{ staff.fullName || staff.email }}</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="media-title">
+                      {{ getFormattedRole(staff.role) }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <span [ngClass]="getStaffStatusClass(staff.active)">
+                      {{ getStaffStatusText(staff.active) }}
+                    </span>
+                    
+                  </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+</section>
