@@ -20,6 +20,8 @@
 
 # IDE - VSCode
 .vscode/*
+.qodo/*
+.angular
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
